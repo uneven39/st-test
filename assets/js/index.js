@@ -2,6 +2,7 @@ import '../scss/styles.scss';
 
 const app = {};
 
+// employee model
 app.Employee = Backbone.Model.extend({
     defaults: {
         name: '',
@@ -17,4 +18,3 @@ app.EmployeeList = Backbone.Collection.extend({
 });
 
 app.employeesList = new app.EmployeeList();
-
