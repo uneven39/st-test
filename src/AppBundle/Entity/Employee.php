@@ -17,7 +17,6 @@ class Employee
     public $position;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\GreaterThan(
      *     value = 18
      * )
@@ -25,7 +24,6 @@ class Employee
     public $age;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Choice(
      *     choices = { "m", "f" },
      *     message = "Choose a valid gender"
