@@ -31,4 +31,12 @@ class Employee
      */
     public $gender;
 
+    public function __construct($name, $position, $age, $gender)
+    {
+        $this->name = $name;
+        $this->position = $position;
+        $this->age = $age;
+        $this->gender = $gender;
+    }
+
 }

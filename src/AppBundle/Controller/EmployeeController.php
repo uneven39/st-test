@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class EmployeeController
@@ -36,7 +35,7 @@ class EmployeeController extends Controller
      * @Route("/{employeeName}")
      * @Method("GET")
      * @param $employeeName
-     * @return JsonResponse
+     * @return JsonResponse $response
      */
     public function getEmployeeByNameAction($employeeName)
     {
@@ -75,13 +74,14 @@ class EmployeeController extends Controller
      */
     public function createEmployeeAction(Request $request)
     {
-        $employee = new Employee();
+        $input = $request->request;
+        $employee = new Employee(
+            $input->get('name'),
+            $input->get('position'),
+            $input->get('age'),
+            $input->get('gender')
+        );
         $validator = $this->get('validator');
-
-        $employee->name = $request->request->get('name');
-        $employee->age = $request->request->get('age');
-        $employee->position = $request->request->get('position');
-        $employee->gender = $request->request->get('gender');
 
         $errors = $validator->validate($employee);
 
@@ -158,19 +158,20 @@ class EmployeeController extends Controller
      * @Method("PUT")
      * @param Request $request
      * @param $employeeName
-     * @return JsonResponse
+     * @return JsonResponse $response
      */
     public function updateEmployeeByNameAction(Request $request, $employeeName)
     {
         $name = urlencode($employeeName);
-        $employee = new Employee();
+        $input = $request->request;
+        $employee = new Employee(
+            $name,
+            $input->get('position'),
+            $input->get('age'),
+            $input->get('gender')
+        );
         $validator = $this->get('validator');
         $response = new JsonResponse();
-
-        $employee->position = $request->request->get('position');
-        $employee->age = $request->request->get('age');
-        $employee->gender = $request->request->get('gender');
-        $employee->name = $name;
 
         $errors = $validator->validate($employee);
 
