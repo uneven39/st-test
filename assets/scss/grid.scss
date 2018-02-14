@@ -1,0 +1,50 @@
+.employees{
+  &-grid {
+    @extend .table, .table-striped, .table-hover;
+
+    thead th.sortable {
+      button,
+      button:active,
+      button:focus {
+        outline: none;
+        background: none;
+        border: none;
+        padding: 0;
+        transition: .3s color;
+
+        &:hover {
+          color: $brand-info;
+        }
+
+        .sort-caret {
+          margin-left: 10px;
+        }
+      }
+
+      &.ascending {
+        button .sort-caret {
+          @extend .glyphicon, .glyphicon-chevron-down;
+        }
+      }
+
+      &.descending {
+        button .sort-caret {
+          @extend .glyphicon, .glyphicon-chevron-up;
+        }
+      }
+
+    }
+
+    tbody {
+      button.edit-item {
+        @extend .btn, .btn-link;
+        padding: 0 6px;
+        float: right;
+
+        &, &:hover, &:focus, &:active {
+          outline: none;
+        }
+      }
+    }
+  }
+}

@@ -25,7 +25,7 @@ class Employee
 
     /**
      * @Assert\Choice(
-     *     choices = { "m", "f" },
+     *     choices = { "мужчина", "женщина" },
      *     message = "Choose a valid gender"
      * )
      */

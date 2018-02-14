@@ -34,8 +34,7 @@ module.exports = {
                                 minimize: true
                             }
                         },
-                        'resolve-url-loader',
-                        'sass-loader?sourceMap'
+                        'sass-loader'
                     ]
                 })
             },
@@ -70,7 +69,7 @@ module.exports = {
                 comments: false,
             }
         }),
-        // Provide jquery (for bootstrap)
+        // Provide core libs
         new webpack.ProvidePlugin({
             jQuery: 'jquery',
             $: 'jquery',

@@ -77,8 +77,15 @@
 #}
 
 {% block body %}
-    <div id="container">Loading...</div>
     <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                <div id="employeesGrid"></div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                <div id="client-side-filter-example-result"></div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xs-12">
                 <button class="btn btn-default" data-toggle="modal" data-target="#createEmployeeModal">Создать</button>
