@@ -1,4 +1,4 @@
-.employees{
+.employees {
   &-grid {
     @extend .table, .table-striped, .table-hover;
 
@@ -36,15 +36,39 @@
     }
 
     tbody {
+      tr {
+        td {
+          vertical-align: middle;
+        }
+      }
       button.edit-item {
         @extend .btn, .btn-link;
-        padding: 0 6px;
         float: right;
 
         &, &:hover, &:focus, &:active {
           outline: none;
         }
       }
+    }
+  }
+
+  &-search {
+    width: 100%;
+    position: relative;
+
+    span.search {
+      display: none;
+    }
+
+    input {
+      @extend .form-control;
+      padding-right: 15px;
+    }
+
+    a.clear {
+      position: absolute;
+      right: 5px;
+      top: 8px;
     }
   }
 }

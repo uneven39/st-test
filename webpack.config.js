@@ -1,5 +1,3 @@
-// const path = require('path');
-// const webpack = require('webpack');
 const webpack = require('webpack');
 const ExtractTextPlugin	= require('extract-text-webpack-plugin');
 
@@ -43,7 +41,8 @@ module.exports = {
                 test: /\.(woff|woff2|eot|ttf|svg)$/,
                 loader: 'file-loader',
                 options: {
-                    name: './fonts/[name].[ext]'
+                    name: './fonts/[name].[ext]',
+                    publicPath: '../'
                 }
             },
         ]
@@ -68,6 +67,10 @@ module.exports = {
             output: {
                 comments: false,
             }
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            minChunks: Infinity
         }),
         // Provide core libs
         new webpack.ProvidePlugin({

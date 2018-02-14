@@ -18,7 +18,7 @@ class Employee
 
     /**
      * @Assert\GreaterThan(
-     *     value = 18
+     *     value = 17
      * )
      */
     public $age;

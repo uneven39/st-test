@@ -79,30 +79,40 @@
 {% block body %}
     <div class="container">
         <div class="row">
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-sm-offset-2">
+                <button class="btn btn-default pull-left" data-toggle="modal" data-target="#editEmployeeModal">Создать</button>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div id="name-filter"></div>
+            </div>
             <div class="col-xs-12 col-sm-8 col-sm-offset-2">
                 <div id="employeesGrid"></div>
             </div>
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-                <div id="client-side-filter-example-result"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <button class="btn btn-default" data-toggle="modal" data-target="#createEmployeeModal">Создать</button>
-            </div>
         </div>
     </div>
-    <div class="modal fade" id="createEmployeeModal" role="dialog">
+    <div class="modal fade" id="editEmployeeModal" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    Создать запись о новом сотруднике
+                    Сотрудник
                 </div>
                 <div class="modal-body">
-
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="name" class="col-xs-12 col-sm-3">Имя</label>
+                            <input type="text" class="form-control col-xs-12 col-sm-9" id="name" placeholder="Имя">
+                        </div>
+                        <div class="form-group">
+                            <label for="position" class="">Должность</label>
+                            <input type="text" class="form-control col-xs-12 col-sm-9" id="position" placeholder="Должность">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger pull-left">Удалить</button>

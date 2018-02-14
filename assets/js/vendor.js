@@ -1,3 +1,3 @@
-import 'jquery/dist/jquery';
-import 'bootstrap-sass/assets/javascripts/bootstrap';
-import 'backbone/backbone';
+import 'jquery';
+import 'bootstrap-sass';
+import 'backbone';

@@ -52,10 +52,16 @@ const columns = [
         name: "position",
         label: "Должность",
         editable: false,
+        cell: 'string'
+    },
+    {
+        name: '',
+        label: '',
+        editable: false,
         cell: Backgrid.Cell.extend({
             render: function () {
-                const html = this.model.attributes['position'] +
-                    '<button class="edit-item"><span class="glyphicon glyphicon-edit"></span></button>';
+                const html = '<button class="edit-item" data-name="' + this.model.attributes['name'] + '">' +
+                    '<span class="glyphicon glyphicon-edit"></span></button>';
                 this.$el.html(html);
                 return this;
             }
@@ -72,12 +78,17 @@ let grid = new Backgrid.Grid({
 $('#employeesGrid').append(grid.render().el);
 
 let clientSideFilter = new Backgrid.Extension.ClientSideFilter({
+    className: 'employees-search',
     collection: app.employeesList,
     fields: ['name'],
-    placeholder: 'enter name to search',
+    placeholder: 'Введите имя для поиска',
     wait: 150
 });
 
-$("#client-side-filter-example-result").prepend(clientSideFilter.render().el);
+$("#name-filter").prepend(clientSideFilter.render().el);
 
 app.employeesList.fetch({reset: true});
+
+$('#employeesGrid').on('click', '.edit-item', function() {
+    $('#editEmployeeModal').modal('show');
+});
