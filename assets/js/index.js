@@ -19,7 +19,8 @@ app.Employee = Backbone.Model.extend({
 
 app.EmployeeList = Backbone.Collection.extend({
     model: app.Employee,
-    url: '/employees',
+    // url: '/employees',
+    url: location.protocol + '//' + location.host + '/employees',
     parse : function(response){
         return response.data;
     }
