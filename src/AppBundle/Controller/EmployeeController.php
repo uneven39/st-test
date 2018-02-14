@@ -18,21 +18,21 @@ class EmployeeController extends Controller
 {
     /**
      * Get full list of employees
-     * @Route("/", schemes={"https"})
+     * @Route("/")
      * @Method("GET")
      * @return JsonResponse
      */
     public function getEmployeesListAction()
     {
         // get list of employees
-        $data = file_get_contents($this->getParameter('web_dir').'/data/employees.json');
+        $data = file_get_contents($this->getParameter('web_dir').'data/employees.json');
         $json_arr = json_decode($data, true);
-        return new JsonResponse(array('data' => $json_arr));
+        return new JsonResponse(array('data' => $json_arr, 'url' => $this->getParameter('web_dir').'data/employees.json'));
     }
 
     /**
      * Get record about employee by name
-     * @Route("/{employeeName}", schemes={"https"})
+     * @Route("/{employeeName}")
      * @Method("GET")
      * @param $employeeName
      * @return JsonResponse $response
@@ -67,7 +67,7 @@ class EmployeeController extends Controller
 
     /**
      * Create employee
-     * @Route("/", schemes={"https"})
+     * @Route("/")
      * @Method("POST")
      * @param Request $request
      * @return JsonResponse
@@ -112,7 +112,7 @@ class EmployeeController extends Controller
 
     /**
      * Delete record about employee by name
-     * @Route("/{employeeName}", schemes={"https"})
+     * @Route("/{employeeName}")
      * @Method("DELETE")
      * @param $employeeName
      * @return JsonResponse
@@ -154,7 +154,7 @@ class EmployeeController extends Controller
 
     /**
      * Update employee data by name
-     * @Route("/{employeeName}", schemes={"https"})
+     * @Route("/{employeeName}")
      * @Method("PUT")
      * @param Request $request
      * @param $employeeName
