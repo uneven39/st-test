@@ -20,7 +20,7 @@ app.Employee = Backbone.Model.extend({
 app.EmployeeList = Backbone.Collection.extend({
     model: app.Employee,
     // url: '/employees',
-    url: location.href + 'employees',
+    url: location.href + 'employees/',
     parse : function(response){
         return response.data;
     }
@@ -28,7 +28,6 @@ app.EmployeeList = Backbone.Collection.extend({
 
 app.employeesList = new app.EmployeeList();
 
-console.log(location);
 console.log(app.employeesList.url);
 
 const columns = [
