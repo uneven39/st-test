@@ -18,7 +18,7 @@ class EmployeeController extends Controller
 {
     /**
      * Get full list of employees
-     * @Route("/")
+     * @Route("/", schemes={"https"})
      * @Method("GET")
      * @return JsonResponse
      */
@@ -32,7 +32,7 @@ class EmployeeController extends Controller
 
     /**
      * Get record about employee by name
-     * @Route("/{employeeName}")
+     * @Route("/{employeeName}", schemes={"https"})
      * @Method("GET")
      * @param $employeeName
      * @return JsonResponse $response
@@ -67,7 +67,7 @@ class EmployeeController extends Controller
 
     /**
      * Create employee
-     * @Route("/")
+     * @Route("/", schemes={"https"})
      * @Method("POST")
      * @param Request $request
      * @return JsonResponse
@@ -112,7 +112,7 @@ class EmployeeController extends Controller
 
     /**
      * Delete record about employee by name
-     * @Route("/{employeeName}")
+     * @Route("/{employeeName}", schemes={"https"})
      * @Method("DELETE")
      * @param $employeeName
      * @return JsonResponse
@@ -154,7 +154,7 @@ class EmployeeController extends Controller
 
     /**
      * Update employee data by name
-     * @Route("/{employeeName}")
+     * @Route("/{employeeName}", schemes={"https"})
      * @Method("PUT")
      * @param Request $request
      * @param $employeeName
