@@ -25,9 +25,9 @@ class EmployeeController extends Controller
     public function getEmployeesListAction()
     {
         // get list of employees
-        $data = file_get_contents($this->getParameter('web_dir').'data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
         $json_arr = json_decode($data, true);
-        return new JsonResponse(array('data' => $json_arr, 'url' => $this->getParameter('web_dir').'data/employees.json'));
+        return new JsonResponse(array('data' => $json_arr));
     }
 
     /**
@@ -41,7 +41,7 @@ class EmployeeController extends Controller
     {
         $name = urldecode($employeeName);
         // get json data
-        $data = file_get_contents($this->getParameter('web_dir').'/data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
         $json_arr = json_decode($data, true);
         $found = '';
         foreach ($json_arr as $key => $value)
@@ -90,7 +90,7 @@ class EmployeeController extends Controller
             return new JsonResponse(array('errors' => $errorsString, 'data' => $employee));
         }
 
-        $data = file_get_contents($this->getParameter('web_dir').'/data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
 
         // decode json
         $json_arr = json_decode($data, true);
@@ -105,7 +105,7 @@ class EmployeeController extends Controller
 
         // encode json and save to file
         $updatedData = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
-        file_put_contents($this->getParameter('web_dir').'/data/employees.json', $updatedData);
+        file_put_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json', $updatedData);
 
         return new JsonResponse(array('data' => $employee));
     }
@@ -121,7 +121,7 @@ class EmployeeController extends Controller
     {
         $name = urldecode($employeeName);
         // get json data
-        $data = file_get_contents($this->getParameter('web_dir').'/data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
         $json_arr = json_decode($data, true);
         $index = '';
         foreach ($json_arr as $key => $value)
@@ -141,7 +141,7 @@ class EmployeeController extends Controller
             $json_arr = array_values($json_arr);
             // encode array to json and save to file
             $updatedData = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
-            file_put_contents($this->getParameter('web_dir').'/data/employees.json', $updatedData);
+            file_put_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json', $updatedData);
             $response->setStatusCode(200);
             $response->setData(array('data' => array($name => 'deleted')));
         } else {
@@ -182,7 +182,7 @@ class EmployeeController extends Controller
             return $response;
         }
 
-        $data = file_get_contents($this->getParameter('web_dir').'/data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
         $found = '';
 
         // decode json
@@ -204,7 +204,7 @@ class EmployeeController extends Controller
         if ($found) {
             // encode json and save to file
             $updatedData = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
-            file_put_contents($this->getParameter('web_dir').'/data/employees.json', $updatedData);
+            file_put_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json', $updatedData);
             $response->setStatusCode(200);
             $response->setData(array('data' => $employee));
             return $response;

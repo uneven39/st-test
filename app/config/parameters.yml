@@ -10,4 +10,3 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: d9622b2c6f41883766bed52cc2d11c8d6aafbf54
-    web_dir: '%kernel.root_dir%/../web/'
