@@ -26,10 +26,10 @@ app.EmployeeList = Backbone.Collection.extend({
     }
 });
 
-console.log(location);
-console.log(app.EmployeeList.url);
-
 app.employeesList = new app.EmployeeList();
+
+console.log(location);
+console.log(app.employeesList.url);
 
 const columns = [
     {
