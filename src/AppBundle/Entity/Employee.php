@@ -44,4 +44,9 @@ class Employee
         $this->gender = $gender;
     }
 
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        // ...
+    }
+
 }

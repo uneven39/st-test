@@ -120,8 +120,8 @@ $('#editEmployeeModal')
     .on('show.bs.modal', function(e){
         const invokerEl = e.relatedTarget;
         if (invokerEl.dataset.action) {
-            this.setAttribute('data-action', invokerEl.dataset.action);
-            if (this.dataset.action === 'create') {
+            app.action = invokerEl.dataset.action;
+            if (app.action === 'create') {
                 // Открыли модал для создания
                 // Очищаем форму
                 $('#employeeAttrsForm')[0].reset();
@@ -129,13 +129,14 @@ $('#editEmployeeModal')
         }
     })
     .on('click', '#saveEmployee', function() {
-        let attrs = {};
-        const action = $('#editEmployeeModal').data('action');
+        let attrs = {},
+            action = app.action;
         // Получаем значения свойств
         $('#employeeAttrsForm').find(':input').each(function(){
             const $input = $(this);
             attrs[$input.prop('name')] = $input.val();
         });
+
         if (action === 'create') {
             // При создании сохраняем нового работника
             app.curEmployee = new app.Employee();
@@ -158,6 +159,7 @@ $('#editEmployeeModal')
                 );
         } else if (action === 'update') {
             // Обновление данных сотрудника
+            console.log('employee update');
             app.curEmployee.fetch({
                 success: function (res) {
                     res.set(attrs)
