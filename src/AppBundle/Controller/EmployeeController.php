@@ -25,28 +25,27 @@ class EmployeeController extends Controller
     public function getEmployeesListAction()
     {
         // get list of employees
-        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/employees.json');
         $json_arr = json_decode($data, true);
         return new JsonResponse(array('data' => $json_arr));
     }
 
     /**
-     * Get record about employee by name
-     * @Route("/{employeeName}")
+     * Get record about employee by id
+     * @Route("/{employeeId}")
      * @Method("GET")
-     * @param $employeeName
+     * @param $employeeId
      * @return JsonResponse $response
      */
-    public function getEmployeeByNameAction($employeeName)
+    public function getEmployeeByIdAction($employeeId)
     {
-        $name = urldecode($employeeName);
         // get json data
-        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir().'/../web/data/employees.json');
         $json_arr = json_decode($data, true);
         $found = '';
         foreach ($json_arr as $key => $value)
         {
-            if ($value['name'] === $name)
+            if ($value['id'] === $employeeId)
             {
                 $found = $value;
                 break;
@@ -59,7 +58,7 @@ class EmployeeController extends Controller
             $response->setData(array('data' => $found));
         } else {
             $response->setStatusCode(404);
-            $response->setData(array('errors' => array($name => 'not found')));
+            $response->setData(array('errors' => array($employeeId => 'not found')));
         }
 
         return $response;
@@ -74,29 +73,37 @@ class EmployeeController extends Controller
      */
     public function createEmployeeAction(Request $request)
     {
-        $input = $request->request;
+        $input = json_decode($request->getContent(), true);
+
         $employee = new Employee(
-            $input->get('name'),
-            $input->get('position'),
-            $input->get('age'),
-            $input->get('gender')
+            uniqid(),
+            $input['name'],
+            $input['position'],
+            $input['age'],
+            $input['gender']
         );
         $validator = $this->get('validator');
 
         $errors = $validator->validate($employee);
 
+        $response = new JsonResponse();
+        $response->headers->set('Content-Type', 'application-json; charset=utf8' );
+
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
-            return new JsonResponse(array('errors' => $errorsString, 'data' => $employee));
+            $response->setData(array('errors' => $errorsString, 'data' => $employee));
+            $response->setStatusCode(400);
+            return $response;
         }
 
-        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/employees.json');
 
         // decode json
         $json_arr = json_decode($data, true);
 
         // add data
         $json_arr[] = array(
+            'id'=>$employee->id,
             'name'=>$employee->name,
             'age'=>$employee->age,
             'position'=>$employee->position,
@@ -105,28 +112,29 @@ class EmployeeController extends Controller
 
         // encode json and save to file
         $updatedData = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
-        file_put_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json', $updatedData);
+        file_put_contents($this->get('kernel')->getRootDir() . '/../web/data/employees.json', $updatedData);
 
-        return new JsonResponse(array('data' => $employee));
+        $response->setData(array('data' => $employee));
+        $response->setStatusCode(200);
+        return $response;
     }
 
     /**
      * Delete record about employee by name
-     * @Route("/{employeeName}")
+     * @Route("/{employeeId}")
      * @Method("DELETE")
-     * @param $employeeName
+     * @param $employeeId
      * @return JsonResponse
      */
-    public function deleteEmployeeByNameAction($employeeName)
+    public function deleteEmployeeByNameAction($employeeId)
     {
-        $name = urldecode($employeeName);
         // get json data
-        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/employees.json');
         $json_arr = json_decode($data, true);
-        $index = '';
+        $index = -1;
         foreach ($json_arr as $key => $value)
         {
-            if ($value['name'] === $name)
+            if ($value['id'] === $employeeId)
             {
                 $index = $key;
                 break;
@@ -134,19 +142,19 @@ class EmployeeController extends Controller
         }
         $response = new JsonResponse();
 
-        if ($index) {
+        if ($index >= 0) {
             // delete employee
             unset($json_arr[$index]);
             // remake array
             $json_arr = array_values($json_arr);
             // encode array to json and save to file
             $updatedData = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
-            file_put_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json', $updatedData);
+            file_put_contents($this->get('kernel')->getRootDir() . '/../web/data/employees.json', $updatedData);
             $response->setStatusCode(200);
-            $response->setData(array('data' => array($name => 'deleted')));
+            $response->setData(array('data' => array($employeeId => 'deleted')));
         } else {
             $response->setStatusCode(404);
-            $response->setData(array('errors' => array($name => 'not found')));
+            $response->setData(array('errors' => array($employeeId => 'not found')));
         }
 
         return $response;
@@ -154,21 +162,22 @@ class EmployeeController extends Controller
 
     /**
      * Update employee data by name
-     * @Route("/{employeeName}")
+     * @Route("/{employeeId}")
      * @Method("PUT")
      * @param Request $request
-     * @param $employeeName
+     * @param $employeeId
      * @return JsonResponse $response
      */
-    public function updateEmployeeByNameAction(Request $request, $employeeName)
+    public function updateEmployeeByNameAction(Request $request, $employeeId)
     {
-        $name = urlencode($employeeName);
-        $input = $request->request;
+        $input = json_decode($request->getContent(), true);
+
         $employee = new Employee(
-            $name,
-            $input->get('position'),
-            $input->get('age'),
-            $input->get('gender')
+            $employeeId,
+            $input['name'],
+            $input['position'],
+            $input['age'],
+            $input['gender']
         );
         $validator = $this->get('validator');
         $response = new JsonResponse();
@@ -182,7 +191,7 @@ class EmployeeController extends Controller
             return $response;
         }
 
-        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json');
+        $data = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/employees.json');
         $found = '';
 
         // decode json
@@ -191,9 +200,10 @@ class EmployeeController extends Controller
         // add data
         foreach ($json_arr as $key => $value)
         {
-            if ($value['name'] === $name)
+            if ($value['id'] === $employeeId)
             {
                 $found = $value;
+                $json_arr[$key]['name'] = $employee->name;
                 $json_arr[$key]['position'] = $employee->position;
                 $json_arr[$key]['age'] = $employee->age;
                 $json_arr[$key]['gender'] = $employee->gender;
@@ -204,13 +214,13 @@ class EmployeeController extends Controller
         if ($found) {
             // encode json and save to file
             $updatedData = json_encode($json_arr, JSON_UNESCAPED_UNICODE);
-            file_put_contents($this->get('kernel')->getRootDir() . '/../web/'.'data/employees.json', $updatedData);
+            file_put_contents($this->get('kernel')->getRootDir() . '/../web/data/employees.json', $updatedData);
             $response->setStatusCode(200);
             $response->setData(array('data' => $employee));
             return $response;
         } else {
             $response->setStatusCode(404);
-            $response->setData(array('errors' => array($name => 'not found')));
+            $response->setData(array('errors' => array($employeeId => 'not found')));
             return $response;
         }
     }

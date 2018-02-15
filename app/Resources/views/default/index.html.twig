@@ -83,7 +83,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-4 col-sm-offset-2">
-                <button class="btn btn-default pull-left" data-toggle="modal" data-target="#editEmployeeModal">Создать</button>
+                <button class="btn btn-default pull-left" data-action="create" data-toggle="modal" data-target="#editEmployeeModal">Создать</button>
             </div>
             <div class="col-xs-12 col-sm-4">
                 <div id="name-filter"></div>
@@ -103,21 +103,32 @@
                     Сотрудник
                 </div>
                 <div class="modal-body">
-                    <div class="form-horizontal">
+                    <form class="form-horizontal" id="employeeAttrsForm">
                         <div class="form-group">
                             <label for="name" class="col-xs-12 col-sm-3">Имя</label>
-                            <input type="text" class="form-control col-xs-12 col-sm-9" id="name" placeholder="Имя">
+                            <input type="text" name="name" class="form-control col-xs-12 col-sm-9" id="name" placeholder="Имя">
                         </div>
                         <div class="form-group">
                             <label for="position" class="">Должность</label>
-                            <input type="text" class="form-control col-xs-12 col-sm-9" id="position" placeholder="Должность">
+                            <input type="text" name="position" class="form-control col-xs-12 col-sm-9" id="position" placeholder="Должность">
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label for="gender" class="col-xs-6">Пол
+                                <select type="text" name="gender" class="form-control" id="gender">
+                                    <option value="m">мужчина</option>
+                                    <option value="f">женщина</option>
+                                </select>
+                            </label>
+                            <label for="age" class="col-xs-6">Пол
+                                <input type="text" name="age" class="form-control" id="age" placeholder="Возраст">
+                            </label>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger pull-left">Удалить</button>
+                    <button type="button" class="btn btn-danger pull-left" id="deleteEmployee">Удалить</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-primary" id="saveEmployee">Сохранить</button>
                 </div>
             </div>
         </div>

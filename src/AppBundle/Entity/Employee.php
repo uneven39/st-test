@@ -9,6 +9,10 @@ class Employee
     /**
      * @Assert\NotBlank()
      */
+    public $id;
+    /**
+     * @Assert\NotBlank()
+     */
     public $name;
 
     /**
@@ -25,14 +29,15 @@ class Employee
 
     /**
      * @Assert\Choice(
-     *     choices = { "мужчина", "женщина" },
+     *     choices = { "m", "f" },
      *     message = "Choose a valid gender"
      * )
      */
     public $gender;
 
-    public function __construct($name, $position, $age, $gender)
+    public function __construct($id, $name, $position, $age, $gender)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->position = $position;
         $this->age = $age;
