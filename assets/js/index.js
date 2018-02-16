@@ -19,6 +19,7 @@ app.Employee = Backbone.Model.extend({
     },
     initialize: function(){
         this.on('invalid', function(model,errors){
+            clearErrors();
             for (let i = 0; i < errors.length; i++) {
                 let error = errors[i];
                 $('#editEmployeeModal').find('input[name=' + error.attr + ']')
