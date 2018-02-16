@@ -83,7 +83,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-4 col-sm-offset-2">
-                <button class="btn btn-default pull-left" data-action="create" data-toggle="modal" data-target="#editEmployeeModal">Создать</button>
+                <button class="btn btn-default pull-left" data-toggle="modal" data-target="#editEmployeeModal">Создать</button>
             </div>
             <div class="col-xs-12 col-sm-4">
                 <div id="name-filter"></div>
@@ -105,24 +105,28 @@
                 <div class="modal-body">
                     <form class="form-horizontal" id="employeeAttrsForm">
                         <div class="form-group">
-                            <label for="name" class="col-xs-12">Имя
+                            <label for="name" class="col-xs-12">Имя*
                                 <input type="text" name="name" class="form-control" id="name" placeholder="Имя">
+                                <span class="error-msg hidden"></span>
                             </label>
                         </div>
                         <div class="form-group">
-                            <label for="position" class="col-xs-12">Должность
+                            <label for="position" class="col-xs-12">Должность*
                                 <input type="text" name="position" class="form-control" id="position" placeholder="Должность">
+                                <span class="error-msg hidden"></span>
                             </label>
                         </div>
                         <div class="form-group">
                             <label for="gender" class="col-xs-6">Пол
                                 <select type="text" name="gender" class="form-control" id="gender">
+                                    <option value="" selected disabled>Укажите пол...</option>
                                     <option value="m">мужчина</option>
                                     <option value="f">женщина</option>
                                 </select>
                             </label>
                             <label for="age" class="col-xs-6">Возраст
                                 <input type="text" name="age" class="form-control" id="age" placeholder="Возраст">
+                                <span class="error-msg hidden"></span>
                             </label>
                         </div>
                     </form>

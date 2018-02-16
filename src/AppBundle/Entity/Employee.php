@@ -3,7 +3,11 @@
 namespace AppBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * Class Employee
+ */
 class Employee
 {
     /**
@@ -20,16 +24,16 @@ class Employee
      */
     public $position;
 
-    /**
-     * @Assert\GreaterThan(
-     *     value = 17
-     * )
-     */
+//    /**
+//     * @Assert\GreaterThan(
+//     *     value = 17
+//     * )
+//     */
     public $age;
 
     /**
      * @Assert\Choice(
-     *     choices = { "m", "f" },
+     *     choices = { "m", "f", "" },
      *     message = "Choose a valid gender"
      * )
      */
@@ -44,9 +48,15 @@ class Employee
         $this->gender = $gender;
     }
 
-    public function validate(ExecutionContextInterface $context, $payload)
+    /**
+     * Assert\Callback
+     */
+    public function isAgeValid(ExecutionContextInterface $context)
     {
-        // ...
+        if ($this->age !== null && $this->age < 18) {
+            $context->buildViolation('Age error')
+                ->atPath('age')
+                ->addViolation();
+        }
     }
-
 }
