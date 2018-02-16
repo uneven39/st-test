@@ -1,6 +1,5 @@
 import '../scss/styles.scss';
 
-// import Backgrid from 'backgrid/lib/backgrid';
 import 'backgrid-filter/backgrid-filter';
 
 const gridSetup = require('./gridSetup');
@@ -122,7 +121,6 @@ $('#editEmployeeModal')
                 $('#editEmployeeModal').modal('hide');
                 // Обновляем коллекцию (и таблицу)
                 app.employeesList.fetch({reset: true});
-                alert('Возникла ошибка при заведении записи');
             }
         });
     })
@@ -137,7 +135,6 @@ $('#editEmployeeModal')
                 $('#editEmployeeModal').modal('hide');
                 // Обновляем коллекцию (и таблицу)
                 app.employeesList.fetch({reset: true});
-                alert('Возникла ошибка при удалении записи');
             }
         });
     });
